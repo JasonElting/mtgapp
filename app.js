@@ -6,14 +6,14 @@ var app = http.createServer(function (req, res) {
   if (req.url.indexOf('/img') != -1) {
     var filePath = req.url.split('/img')[1];
     fs.readFile(__dirname + '/public/img' + filePath, function (err, data) {
-      if (err) {
+      //if (err) {
         res.writeHead(404, {'Content-Type': 'text/plain'});
         res.write('Error 404: Resource not found.');
         console.log(err);
-      } else {
-        res.writeHead(200, {'Content-Type': 'image/svg+xml'});
-        res.write(data);
-      }
+      //} else {
+        //res.writeHead(200, {'Content-Type': 'image/svg+xml'});
+        //res.write(data);
+      //}
       res.end();
     });
   } else if (req.url.indexOf('/js') != -1) {
