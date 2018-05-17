@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req,res) {
 	
-  res.render('index.ejs', {
+  res.render('index', {
   	title: 'Hypergeometric calculator',
   });
 
@@ -29,14 +29,7 @@ app.get('/', function(req,res) {
 
 app.post('/list', function(req,res){
 	var list=req.body.list;
-	res.render('list.ejs',{
-		data:list
-	})
-
-})
-app.get('/list', function(req,res){
-	var list=req.body.list;
-	res.render('list.ejs',{
+	res.render('list',{
 		data:list
 	})
 
