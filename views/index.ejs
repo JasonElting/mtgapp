@@ -1,15 +1,13 @@
 <% include partials/header %>
-	<h1><%= title %></h1>
+ 	<h1><%= title %></h1>
+ 	
 	<form method="POST" action="/list"> 
 		<label> list </label><br>
-		<input type="text" name="list" <br><br>>
+		<textarea name="message" rows="10" cols="30">put your list here</textarea>
 		<br>
-		<input type="submit" value="Submit">
+  		<input type="submit">
 	</form>
-	<ul>
-	<% ppl.forEach(function(p){   %>
-			<li><%= p.id %> </li>
-	<% })%>
-	</ul>
+
+	
 
 <% include partials/footer %>

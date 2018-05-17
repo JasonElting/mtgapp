@@ -19,35 +19,28 @@ app.set('views', path.join(__dirname,'views'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/ejs', function(req,res) {
+app.get('/', function(req,res) {
 	
-var ppl=[
-	{
-		id: 1,
-		name:'joe'
-	},
-	{
-		id: 2,
-		name:'joe2'
-	},
-	{
-		id: 3,
-		name:'joe3'
-	}
-
-]
   res.render('index.ejs', {
-  	title: 'ppl',
-  	ppl: ppl
+  	title: 'Hypergeometric calculator',
   });
 
 });
 
 app.post('/list', function(req,res){
 	var list=req.body.list;
+	res.render('list.ejs',{
+		data:list
+	})
 
 })
+app.get('/list', function(req,res){
+	var list=req.body.list;
+	res.render('list.ejs',{
+		data:list
+	})
 
+})
 
 app.listen(port,function(){
   console.log('server start');
