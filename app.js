@@ -36,7 +36,7 @@ var ppl=[
 	}
 
 ]
-  res.render('index', {
+  res.render('index.ejs', {
   	title: 'ppl',
   	ppl: ppl
   });
@@ -44,7 +44,8 @@ var ppl=[
 });
 
 app.post('/list', function(req,res){
-	var list=req.body.list.split("\n");
+	var list=req.body.list;
+
 })
 
 
