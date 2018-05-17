@@ -20,9 +20,32 @@ app.set('views', path.join(__dirname,'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/ejs', function(req,res) {
-  res.render('index');
+	
+var ppl=[
+	{
+		id: 1,
+		name:'joe'
+	},
+	{
+		id: 2,
+		name:'joe2'
+	},
+	{
+		id: 3,
+		name:'joe3'
+	}
+
+]
+  res.render('index', {
+  	title: 'ppl',
+  	ppl: ppl
+  });
 
 });
+
+app.post('/list', function(req,res){
+	var list=req.body.list.split("\n");
+})
 
 
 app.listen(port,function(){
