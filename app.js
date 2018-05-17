@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 //view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname,'views'));
-
+app.set('public', path.join(__dirname,'public'))
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req,res) {
@@ -30,7 +30,7 @@ app.get('/', function(req,res) {
 app.post('/list', function(req,res){
 	var list=req.body.list;
 	res.render('list',{
-		data:list
+		list:list
 	})
 
 })
