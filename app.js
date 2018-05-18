@@ -29,34 +29,42 @@ app.set('public', path.join(__dirname,'public'))
 })
 
 app.post('/list', function(req,res){
+	var promises=[]
 	var imagelist=[]
 	var list=req.body.list
-	console.log("posted this: "+list)
-	
+	console.log("posted this: "+list)	
 	list=list.split("\n")
 	console.log("starting for each")
-	list.forEach(function(card) {
+	list.forEach(function(card) {		
+		//the mtg.card.where() returns a promise
+		console.log("stacking all promises "+card)
+		promises.push(mtg.card.where({name:card}))
 
- 
-		
-	 	mtg.card.where({name:card}).then(cards=> {
-	 		var url =cards[0].imageUrl
-	 		if(url){
-	 		imagelist.push(cards[0].imageUrl)
-	 		} else{
-	 			console.log("no such card")
-	 		}
-			console.log("get url: "+imagelist)		
-	 	})
-	 	
-	 	
+	
 	})
 
-	console.log("render"+imagelist)
+	
+	Promise.all(promises).then(function(decklist) {
+		decklist.forEach(function(cardMatches){
+			try{
+			imagelist.push(cardMatches[0].imageUrl)
+		}catch(error){
 
-	res.render('list',{
-		list:list,
-		imagelist:imagelist[0]
+			console.log(cardMatches)
+			console.log(error)
+		}
+		
+
+
+		})
+		console.log("resolving all promises ")
+  		
+  		res.render('list',{
+			list:list,
+			images:imagelist
+		})
+
+  	
 	})
 
 })

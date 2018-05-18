@@ -4,7 +4,13 @@
         <div class="text">
             <h1>Cards</h1>
             <h2><%= list %></h2>
-            <img src= <%- imagelist %>>
+                       	<% images.forEach(function(url){ %>
+   					<tr> 
+     					<img src= <%- url %>>
+     				
+   					</tr>
+				<% }) %>
+
 
         </div>
     </div>
