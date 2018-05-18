@@ -1,36 +1,62 @@
-var port = process.env.PORT || 3000 ;
-var express = require('express');
-var bodyParser = require('body-parser');
+var port = process.env.PORT || 3000 
+var express = require('express')
+var bodyParser = require('body-parser')
 var path = require('path')
-
-var app = express();
+var mtg = require('mtgsdk')
+var app = express()
 
 
 //body parser middle ware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: false}))
 
 //set static path
 
 
 //view engine
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname,'views'))     
-app.set('public', path.join(__dirname,'public'))
-app.use(express.static(path.join(__dirname, 'public')));
+app.set('view engine', 'ejs')
+
+app.use(express.static(path.join(__dirname, 'public')))
 
 app.get('/', function(req,res) {
-	
-  res.render('index', {
-  	title: 'Hypergeometric calculator',
-  });
+	app.set('views', path.join(__dirname,'views'))    
 
-});
+app.set('public', path.join(__dirname,'public'))
+  res.render('index', {
+  	title: 'Test App',
+  })
+
+})
 
 app.post('/list', function(req,res){
-	var list=req.body.list;
+	var imagelist=[]
+	var list=req.body.list
+	console.log("posted this: "+list)
+	
+	list=list.split("\n")
+	console.log("starting for each")
+	list.forEach(function(card) {
+
+ 
+		
+	 	mtg.card.where({name:card}).then(cards=> {
+	 		var url =cards[0].imageUrl
+	 		if(url){
+	 		imagelist.push(cards[0].imageUrl)
+	 		} else{
+	 			console.log("no such card")
+	 		}
+			console.log("get url: "+imagelist)		
+	 	})
+	 	
+	 	
+	})
+
+	console.log("render"+imagelist)
+
 	res.render('list',{
-		list:list
+		list:list,
+		imagelist:imagelist[0]
 	})
 
 })
