@@ -29,106 +29,45 @@ app.set('public', path.join(__dirname,'public'))
 })
 
 app.post('/list', function(req,res){
-	var promises=[]
-	var imagelist=[]
+	
+	var cardlist=[]
 	var list=req.body.list
 	console.log("posted this: "+list)	
 	list=list.split("\n")
-	console.log("starting for each")
+	console.log("stacking these guys: \n"+ list)
 	list.forEach(function(card) {		
+		var promises=[]
 		//the mtg.card.where() returns a promise
 		console.log("stacking all promises "+card)
-		promises.push(mtg.card.where({name:card}))
-
-	
-	})
-
-	
-	Promise.all(promises).then(function(decklist) {
-		decklist.forEach(function(cardMatches){
-			try{
-			imagelist.push(cardMatches[0].imageUrl)
-		}catch(error){
-
-			console.log(cardMatches)
-			console.log(error)
-		}
+		promises.push(mtg.card.where({name:card}))			
 		
 
+			Promise.all(promises).then(function(allCards){
+				console.log("all cards")
+				var count=0
+				allCards.forEach(function(card){
+					try{
+						console.log(card[0].name)	
+					} catch(error){
+						console.log("failed on "+list[count])
+					}
 
+
+					count++
+				})
+				
+
+			})
 		})
-		console.log("resolving all promises ")
-  		
-  		res.render('list',{
+	console.log("finished")
+	
+		res.render('list',{
 			list:list,
-			images:imagelist
+			cards:cardlist
 		})
-
-  	
-	})
 
 })
 
 app.listen(port,function(){
   console.log('server start');
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//     http = require('http'),
-//     fs = require('fs');
-
-// var app = http.createServer(function (req, res) {
-//   if (req.url.indexOf('/js') != -1) {//checks for java script and runs it
-//     var filePath = req.url.split('/js')[1];
-//     fs.readFile(__dirname + '/public/js' + filePath, function (err, data) {
-//       if (err) {
-//         res.writeHead(404, {'Content-Type': 'text/plain'});
-//         res.write('Error 404: Resource not found.');
-//         console.log(err);
-//       } else {
-//         res.writeHead(200, {'Content-Type': 'text/javascript'});
-//         res.write(data);
-//       }
-//       res.end();
-//     });
-//   } else if(req.url.indexOf('/css') != -1) { //checks for css and runs it
-//     var filePath = req.url.split('/css')[1];
-//     fs.readFile(__dirname + '/public/css' + filePath, function (err, data) {
-//       if (err) {
-//         res.writeHead(404, {'Content-Type': 'text/plain'});
-//         res.write('Error 404: Resource not found.');
-//         console.log(err);
-//       } else {
-//         res.writeHead(200, {'Content-Type': 'text/css'});
-//         res.write(data);
-//       }
-//       res.end();
-//     });
-//   }  else { //loads index.html
-//     fs.readFile(__dirname + '/public/index.html', function (err, data) {
-//       if (err) {
-//         res.writeHead(404, {'Content-Type': 'text/plain'});
-//         res.write('Error 404: Resource not found.');
-//         console.log(err);
-//       } else {
-//         res.writeHead(200, {'Content-Type': 'text/html'});
-//         res.write(data);
-//       }
-//       res.end();
-//     });
-//   }
-// }).listen(port, '0.0.0.0');
-
-// module.exports = app;
