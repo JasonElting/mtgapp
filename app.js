@@ -45,27 +45,42 @@ app.post('/list', function(req,res){
 		promises.push(currentPromise)
 		currentPromise.then(function(cards){
 			
-				try{
-					console.log(cards[0].name)
-					console.log(cards[0].imageUrl)
-					name=""+cards[0].name
-					cardimage=cards[0].imageUrl
-					//console.log(cardimage)
-				} catch(err){
-					console.log("error no card")
-					console.log(err)
-				}
+			try{
+				var bestmatch=cards[0]
+				cards.forEach(function(cardresult){
+					console.log("looping "+cardresult.name.toLowerCase())
+					console.log("looking for: "+ card.toLowerCase())
+					if(cardresult.name.toLowerCase()==card.toLowerCase()&&cardresult.imageUrl){
+						console.log("found match")
+						bestmatch=cardresult
+						
+					}
+				})
+				console.log("name: "+ bestmatch.name)
+				console.log("pics: "+bestmatch.imageUrl)
+				console.log("id: "+bestmatch.multiverseid)
+				name=""+bestmatch.name
+				cardimage=bestmatch.imageUrl
+
+				//console.log(cardimage)
+			} catch(err){
+				console.log("error no card")
+				console.log(err)
+			}
 			
+		}, function(err){
+			console.log("error promise failed")
+			console.log(err)
 		})
 
 	})
 	Promise.all(promises).then(function(vaL){
-	console.log("finished: "+ cardimage)
-	res.render('list',{
-			list:list,
-			name:name,
-			cardlist:cardimage
-	})	
+		console.log("finished: "+ cardimage)
+		res.render('list',{
+				list:list,
+				name:name,
+				cardlist:cardimage
+		})	
 	})
 		
 	
