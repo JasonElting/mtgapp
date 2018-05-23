@@ -11,7 +11,6 @@ app.use(bodyParser.urlencoded({extended: false}))
 
 //set static path
 
-
 //view engine
 app.set('view engine', 'ejs')
 
@@ -36,8 +35,9 @@ app.post('/list', function(req,res){
 	if(game=="pokemon"){
 		mtg = require('pokemontcgsdk')
 		console.log("this is pokemon")
-	}else{
+	}else if(game=="magic"){
 		console.log(game)
+		mtg = require('mtgsdk')
 	}
 	var list=req.body.list
 	console.log("posted this: "+list)	
@@ -91,9 +91,6 @@ app.post('/list', function(req,res){
 		
 	
 		
-
-		
-
 })
 
 app.listen(port,function(){
