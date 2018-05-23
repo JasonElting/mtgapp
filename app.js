@@ -29,42 +29,49 @@ app.set('public', path.join(__dirname,'public'))
 })
 
 app.post('/list', function(req,res){
-	
+	var name=""
+	var promises=[]
 	var cardlist=[]
+	var cardimage=""
 	var list=req.body.list
 	console.log("posted this: "+list)	
 	list=list.split("\n")
 	console.log("stacking these guys: \n"+ list)
 	list.forEach(function(card) {		
-		var promises=[]
+	
 		//the mtg.card.where() returns a promise
 		console.log("stacking all promises "+card)
-		promises.push(mtg.card.where({name:card}))			
+		var currentPromise=mtg.card.where({name:card})
+		promises.push(currentPromise)
+		currentPromise.then(function(cards){
+			
+				try{
+					console.log(cards[0].name)
+					console.log(cards[0].imageUrl)
+					name=""+cards[0].name
+					cardimage=cards[0].imageUrl
+					//console.log(cardimage)
+				} catch(err){
+					console.log("error no card")
+					console.log(err)
+				}
+			
+		})
+
+	})
+	Promise.all(promises).then(function(vaL){
+	console.log("finished: "+ cardimage)
+	res.render('list',{
+			list:list,
+			name:name,
+			cardlist:cardimage
+	})	
+	})
+		
+	
 		
 
-			Promise.all(promises).then(function(allCards){
-				console.log("all cards")
-				var count=0
-				allCards.forEach(function(card){
-					try{
-						console.log(card[0].name)	
-					} catch(error){
-						console.log("failed on "+list[count])
-					}
-
-
-					count++
-				})
-				
-
-			})
-		})
-	console.log("finished")
-	
-		res.render('list',{
-			list:list,
-			cards:cardlist
-		})
+		
 
 })
 
