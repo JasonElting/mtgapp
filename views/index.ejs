@@ -1,7 +1,9 @@
 <% include partials/header %>
  	<h1><%= title %></h1>
- 	
+
 	<form method="POST" action="/list"> 
+		<input type="radio" name="game" value="magic"> magic<br>
+  		<input type="radio" name="game" value="pokemon"> pokemon<br>
 		<label> list </label><br>
 		<textarea name="list" rows="10" cols="30">squee</textarea>
 		<br>

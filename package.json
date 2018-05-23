@@ -17,6 +17,7 @@
     "ejs": "^2.6.1",
     "express": "^4.16.3",
     "mtgsdk": "^0.3.0",
-    "nodemon": "^1.17.4"
+    "nodemon": "^1.17.4",
+    "pokemontcgsdk": "^1.1.0"
   }
 }

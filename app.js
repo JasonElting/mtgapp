@@ -5,7 +5,6 @@ var path = require('path')
 var mtg = require('mtgsdk')
 var app = express()
 
-
 //body parser middle ware
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
@@ -33,6 +32,13 @@ app.post('/list', function(req,res){
 	var promises=[]
 	var cardlist=[]
 	var cardimage=""
+	var game=req.body.game
+	if(game=="pokemon"){
+		mtg = require('pokemontcgsdk')
+		console.log("this is pokemon")
+	}else{
+		console.log(game)
+	}
 	var list=req.body.list
 	console.log("posted this: "+list)	
 	list=list.split("\n")
@@ -58,7 +64,7 @@ app.post('/list', function(req,res){
 				})
 				console.log("name: "+ bestmatch.name)
 				console.log("pics: "+bestmatch.imageUrl)
-				console.log("id: "+bestmatch.multiverseid)
+				console.log("id: "+bestmatch.id)
 				name=""+bestmatch.name
 				cardimage=bestmatch.imageUrl
 
