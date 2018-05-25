@@ -1,3 +1,5 @@
 help
 node_modules/
 package-lock.json
+AllCards.json.zip
+AllCards.json
