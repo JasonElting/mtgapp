@@ -5,7 +5,12 @@ var path = require('path')
 var mtg = require('mtgsdk')
 var app = express()
 var fs = require('fs');
-var mtgjson = JSON.parse(fs.readFileSync('AllCards.json', 'utf8'));
+try{
+	var mtgjson = JSON.parse(fs.readFileSync('AllCards.json', 'utf8'));
+} catch(error){
+	console.log("AllCards.json not found, download here:https://mtgjson.com/json/AllCards.json.zip")
+	return
+}	
 //body parser middle ware
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
