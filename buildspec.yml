@@ -4,11 +4,7 @@ phases:
   install:
     commands:
       # Install dependencies needed for running tests
-      - apt install -y unzip
-      - npm install
-      - wget https://mtgjson.com/json/AllCards.json.zip
-      - unzip AllCards.json.zip 
-      - rm AllCards.json.zip
+      - sudo ./install.sh
       # Upgrade AWS CLI to the latest version
       - pip install --upgrade awscli
   pre_build:
