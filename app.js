@@ -5,6 +5,7 @@ var path = require('path')
 var mtg = require('mtgsdk')
 var app = express()
 var fs = require('fs');
+
 try{
 	var mtgjson = JSON.parse(fs.readFileSync('AllCards.json', 'utf8'));
 } catch(error){
@@ -58,12 +59,6 @@ app.post('/list', function(req,res){
 		//var currentPromise=mtg.card.where({name:card})
 	})
 
-	card.all({ name: 'Squee', pageSize: 1 })
-	.on('data', card => {
-		console.log(card.name)
-
-	})
-	
 		res.render('list',{
 				list:list,
 				name:name,
