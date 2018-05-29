@@ -53,12 +53,6 @@ app.post('/list', function(req,res){
 		//var currentPromise=mtg.card.where({name:card})
 	})
 
-	card.all({ name: 'Squee', pageSize: 1 })
-	.on('data', card => {
-		console.log(card.name)
-
-	})
-	
 		res.render('list',{
 				list:list,
 				name:name,
