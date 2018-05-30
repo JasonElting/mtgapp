@@ -16,7 +16,6 @@
     "body-parser": "^1.18.3",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
-    "mtgjson": "^3.8.1",
     "mtgsdk": "^0.3.0",
     "nodemon": "^1.17.4",
     "pokemontcgsdk": "^1.1.0"
