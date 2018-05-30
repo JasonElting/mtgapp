@@ -4,14 +4,7 @@ var bodyParser = require('body-parser')
 var path = require('path')
 var mtg = require('mtgsdk')
 var app = express()
-var fs = require('fs');
 
-try{
-	var mtgjson = JSON.parse(fs.readFileSync('AllCards.json', 'utf8'));
-} catch(error){
-	console.log("AllCards.json not found, download here:https://mtgjson.com/json/AllCards.json.zip")
-	return
-}	
 //body parser middle ware
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
@@ -50,21 +43,51 @@ app.post('/list', function(req,res){
 	console.log("posted this: "+list)	
 	list=list.split("\n")
 	console.log("stacking these guys: \n"+ list)
-	var request=[]
 	list.forEach(function(card) {		
-		request.push({name:card})
+	
 		//the mtg.card.where() returns a promise
 		console.log("stacking all promises "+card)
+		var currentPromise=mtg.card.where({name:card})
+		promises.push(currentPromise)
+		currentPromise.then(function(cards){
+			
+			try{
+				var bestmatch=cards[0]
+				cards.forEach(function(cardresult){
+					console.log("looping "+cardresult.name.toLowerCase())
+					console.log("looking for: "+ card.toLowerCase())
+					if(cardresult.name.toLowerCase()==card.toLowerCase()&&cardresult.imageUrl){
+						console.log("found match")
+						bestmatch=cardresult
+						
+					}
+				})
+				console.log("name: "+ bestmatch.name)
+				console.log("pics: "+bestmatch.imageUrl)
+				console.log("id: "+bestmatch.id)
+				name=""+bestmatch.name
+				cardimage=bestmatch.imageUrl
 
-		//var currentPromise=mtg.card.where({name:card})
+				//console.log(cardimage)
+			} catch(err){
+				console.log("error no card")
+				console.log(err)
+			}
+			
+		}, function(err){
+			console.log("error promise failed")
+			console.log(err)
+		})
+
 	})
-
+	Promise.all(promises).then(function(vaL){
+		console.log("finished: "+ cardimage)
 		res.render('list',{
 				list:list,
 				name:name,
 				cardlist:cardimage
 		})	
-	
+	})
 		
 	
 		
@@ -73,17 +96,3 @@ app.post('/list', function(req,res){
 app.listen(port,function(){
   console.log('server start');
 })
-
-function getBestMatch(cardname,cardlist){
-	var bestmatch=cardlist[0]
-	cardlist.forEach(function(cardresult){
-		console.log("looping "+cardresult.name.toLowerCase())
-		console.log("looking for: "+ cardname.toLowerCase())
-		if(cardresult.name.toLowerCase()==cardname.toLowerCase()&&cardresult.imageUrl){
-			console.log("found match")
-			bestmatch=cardresult
-			
-		}
-	})
-	return bestmatch
-}
