@@ -27,11 +27,8 @@ Getting Started
 to start this example application locally run:
 
 `git pull https://github.com/JasonElting/mtgapp.git && \
-
 cd mtgapp &&\
-
 bash install.sh &&\
-
 npm start`
 
 
