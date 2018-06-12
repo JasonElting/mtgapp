@@ -26,13 +26,14 @@ Getting Started
 
 to start this example application locally run:
 
-`git pull https://github.com/JasonElting/mtgapp.git`
+`git pull https://github.com/JasonElting/mtgapp.git && \
 
-`cd mtgapp`
+cd mtgapp &&\
 
-`bash install.sh`
+bash install.sh &&\
 
-`npm start`
+npm start`
+
 
 and then a server will be running at `localhost:3000`
 
