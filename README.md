@@ -38,4 +38,17 @@ and then a server will be running at `localhost:3000`
 
 Running on AWS
 ---------------
-//todo
+So the easiest way to get this application running in AWS is to just clone it to an 
+EC2 instance and run the 4 lines above. 
+
+If your actually interested in using AWS devolopemnt CI/CD tools then CodeStar is 
+the easiest way, it automatically configures everything, but it technically does 
+support integration with existing projects so here is how you do that.
+
+1. start a CodeStar Project (for this example one using node.js and elastic beanstalk.
+   
+   it will ask you to creat a new github repo, just make it then you can delete it later
+2. navigate to the codepipeline scetion and edit the application source section
+3. change the repository to an existing one in your account
+   
+   you probably want to use a forked version of this repo
