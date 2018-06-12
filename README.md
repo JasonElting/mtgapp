@@ -4,6 +4,8 @@ Welcome to A sample nodejs app
 This sample code helps get you started with a simple Node.js web application
 deployed by AWS Elastic Beanstalk through AWS CodePipeline
 
+To see a live version of this app running go to [here](mtg.jasonelting.com)
+
 What's Here
 -----------
 
