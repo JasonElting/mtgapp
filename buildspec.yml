@@ -4,7 +4,6 @@ phases:
   install:
     commands:
       # Install dependencies needed for running tests
-      - npm install @angular/cli
       - npm install
 
       # Upgrade AWS CLI to the latest version
@@ -20,7 +19,6 @@ phases:
 
       # Install runtime dependencies
       - npm install --production
-      - npm build
 artifacts:
   type: zip
   files:
